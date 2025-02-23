@@ -1,0 +1,56 @@
+int IR1 = 2;
+int IR2 = 3;
+int IR3 = 4;
+int led1 = 9;
+int led2 = 10;
+int led3 = 11;
+//#define LDR = A0;
+int brightness = 0;
+void setup() {
+pinMode(IR1, INPUT);
+pinMode(IR2, INPUT);
+pinMode(IR3, INPUT);
+Serial.begin(9600);
+// pinMode(LDR, INPUT);
+pinMode(led1, OUTPUT);
+pinMode(led2, OUTPUT);
+pinMode(led3, OUTPUT);
+}
+void loop() {
+brightness = map(analogRead(A0),0,1000,0,255);
+Serial.println(brightness);
+if(brightness > 150){
+if(digitalRead(IR1) == 0)
+{
+analogWrite(led1, brightness);
+analogWrite(led2, brightness);
+delay(100);
+}
+else {
+analogWrite(led1, 10);
+analogWrite(led2, 10);
+}
+if(digitalRead(IR2) == 0)
+{
+analogWrite(led2, brightness);
+analogWrite(led3, brightness);
+delay(100);
+}
+else {
+analogWrite(led2, 10);
+analogWrite(led3 ,10);
+}
+if(digitalRead(IR3) == 0)
+{
+analogWrite(led3, brightness);
+delay(100);
+}
+else analogWrite(led3, 10);
+delay(300);
+}
+else {
+analogWrite(led1, 0);
+analogWrite(led2, 0);
+analogWrite(led3, 0);
+}
+}
